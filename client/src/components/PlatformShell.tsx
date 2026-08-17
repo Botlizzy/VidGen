@@ -1,6 +1,6 @@
 /* VID-GEN shell: deep-black creator workspace with vivid red, blue, green, and yellow states. */
 import { Link, useLocation } from "wouter";
-import { Bell, CalendarDays, ChartNoAxesCombined, Home, LayoutDashboard, Link2, Menu, PenLine, Settings, Sparkles, X } from "lucide-react";
+import { Bell, CalendarDays, ChartNoAxesCombined, Home, Library, Menu, PenLine, Settings, Sparkles, X } from "lucide-react";
 import { useState } from "react";
 
 const nav = [
@@ -8,7 +8,7 @@ const nav = [
   ["Generate", "/dashboard#generate", PenLine],
   ["Schedule", "/schedule", CalendarDays],
   ["Analytics", "/dashboard#analytics", ChartNoAxesCombined],
-  ["Connections", "/connect", Link2],
+  ["Library", "/dashboard#library", Library],
   ["Settings", "/dashboard#settings", Settings],
 ] as const;
 
