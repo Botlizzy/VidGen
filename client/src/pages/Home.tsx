@@ -1,64 +1,75 @@
-/* Midnight Studio: asymmetrical dark canvas, signal-blue workflow cues, editorial typography, and instrument-like interactions. */
 import { useState } from "react";
+import { ArrowUpRight, CalendarDays, Check, Clock3, Instagram, Menu, Music2, PenLine, Send, X, Youtube } from "lucide-react";
 import { Link, useLocation } from "wouter";
-import { ArrowUpRight, Check, ChevronRight, Menu, Play, Sparkles, Wand2, X } from "lucide-react";
 
-const heroImage = "/manus-storage/vid-gen-hero_75b5016b.jpg";
-const workflowImage = "/manus-storage/vid-gen-workflow_2604edfb.jpg";
 const logo = "/manus-storage/vid-gen-mark_b4fd1632.png";
+const heroVideo = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663897199193/lRhvhBRvMbsmvoJz.mp4";
+const heroPoster = "/manus-storage/vid-gen-hero_75b5016b.jpg";
 
 function Brand() {
-  return <Link href="/" className="brand" aria-label="VID-GEN home"><img src={logo} alt="" /><span className="brand-name"><span className="brand-vid">VID</span><span className="brand-cut">·</span><span className="brand-gen">GEN</span></span></Link>;
+  return <Link href="/" className="landing-brand" aria-label="VID-GEN home"><img src={logo} alt="" /><span className="brand-name"><span className="brand-vid">VID</span><span className="brand-cut">·</span><span className="brand-gen">GEN</span></span></Link>;
 }
 
 function Header() {
   const [open, setOpen] = useState(false);
   const [, navigate] = useLocation();
-  return <header className="site-header">
+  const close = () => setOpen(false);
+  return <header className="landing-header">
     <Brand />
-    <nav className={open ? "main-nav is-open" : "main-nav"} aria-label="Main navigation">
-      <a href="#workflow" onClick={() => setOpen(false)}>How it works</a>
-      <a href="#formats" onClick={() => setOpen(false)}>Formats</a>
-      <a href="#automation" onClick={() => setOpen(false)}>Automation</a>
-      <Link href="/login" onClick={() => setOpen(false)}>Sign in</Link>
-      <button className="nav-cta" onClick={() => navigate("/signup")}>Create free account <ArrowUpRight size={15} /></button>
+    <nav className={open ? "landing-nav is-open" : "landing-nav"} aria-label="Main navigation">
+      <a href="#how-it-works" onClick={close}>How it works</a>
+      <a href="#channels" onClick={close}>Channels</a>
+      <a href="#automation" onClick={close}>Automation</a>
+      <Link href="/login" onClick={close}>Sign in</Link>
+      <button className="landing-nav-button" onClick={() => navigate("/signup")}>Get started <ArrowUpRight size={15} /></button>
     </nav>
-    <button className="menu-toggle" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>
+    <button className="landing-menu" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>
   </header>;
 }
 
-function PromptConsole() {
-  const [prompt, setPrompt] = useState("Launch a 30-second creator tip about staying consistent");
-  return <div className="prompt-console">
-    <div className="console-top"><span><span className="live-dot" /> Prompt studio</span><span className="mono">READY / 01</span></div>
-    <label htmlFor="prompt">What should we make?</label>
-    <textarea id="prompt" value={prompt} onChange={(e) => setPrompt(e.target.value)} rows={3} />
-    <div className="console-bottom"><div className="channel-pills"><span>Short video</span><span>Caption</span><span>Thumbnail</span></div><button className="generate-btn"><Wand2 size={16} /> Generate run</button></div>
-    <div className="run-preview"><div className="run-preview-head"><span className="mono">OUTPUT PLAN</span><span className="status-pill">● queued</span></div><div className="run-row"><span className="run-number">01</span><span>Hook + script</span><span className="run-time">00:08</span></div><div className="run-row"><span className="run-number">02</span><span>Vertical edit</span><span className="run-time">00:42</span></div><div className="run-row"><span className="run-number">03</span><span>Channel-ready copy</span><span className="run-time">00:12</span></div></div>
+function PublishingPreview() {
+  return <div className="publishing-preview" aria-label="Example content publishing schedule">
+    <div className="preview-head"><div><span className="preview-kicker">This week</span><strong>Publishing queue</strong></div><span className="preview-status"><span /> On track</span></div>
+    <div className="preview-progress"><span /><span /><span /><span /><span /><span /><span /></div>
+    <div className="preview-date"><span>MON 12</span><span>TUE 13</span><span>WED 14</span><span>THU 15</span><span>FRI 16</span></div>
+    <div className="scheduled-post featured"><div className="post-thumb post-thumb-coral">01</div><div className="post-copy"><strong>3 habits that changed my mornings</strong><span><Clock3 size={12} /> Today at 9:30 AM</span></div><span className="post-channel"><Instagram size={15} /></span></div>
+    <div className="scheduled-post"><div className="post-thumb post-thumb-sage">02</div><div className="post-copy"><strong>Behind the scenes: a better workflow</strong><span><CalendarDays size={12} /> Tomorrow at 12:00 PM</span></div><span className="post-channel"><Youtube size={15} /></span></div>
+    <div className="scheduled-post"><div className="post-thumb post-thumb-blue">03</div><div className="post-copy"><strong>One small idea worth saving</strong><span><CalendarDays size={12} /> Friday at 8:00 AM</span></div><span className="post-channel"><Music2 size={15} /></span></div>
+    <div className="preview-footer"><span><Check size={14} /> 12 posts ready</span><span>View schedule <ArrowUpRight size={13} /></span></div>
   </div>;
 }
 
 export default function Home() {
-  return <div className="app-shell">
+  return <div className="landing-shell">
     <Header />
     <main>
-      <section className="hero-section">
-        <div className="hero-copy"><div className="eyebrow"><span className="eyebrow-line" />Creator workflow</div><h1>One prompt.<br /><em>Every channel.</em></h1><p className="hero-sub">VID-GEN turns the spark in your head into scroll-stopping content — then publishes it where your audience already lives.</p><div className="hero-actions"><Link href="/signup" className="primary-btn">Start creating free <ArrowUpRight size={17} /></Link><a href="#workflow" className="text-btn"><span className="play-icon"><Play size={12} fill="currentColor" /></span> See how it works</a></div><div className="hero-proof"><div className="avatar-stack"><span>J</span><span>M</span><span>A</span><span>+</span></div><p>Built for the <strong>next wave</strong> of creators</p></div></div>
-        <div className="hero-visual"><div className="hero-image-frame"><img src={heroImage} alt="Dark creator workspace with a prompt-to-publish workflow" /><div className="image-label mono">LIVE CREATOR DESK <span>↗</span></div></div><PromptConsole /></div>
+      <section className="landing-hero">
+        <div className="hero-video-layer" aria-hidden="true">
+          <video className="hero-background-video" autoPlay muted loop playsInline poster={heroPoster}>
+            <source src={heroVideo} type="video/mp4" />
+          </video>
+          <div className="hero-video-shade" />
+        </div>
+        <div className="hero-message">
+          <div className="landing-eyebrow"><span /> CONTENT, ON SCHEDULE</div>
+          <h1>Your content should<br /><em>run without you.</em></h1>
+          <p>VID-GEN turns one good idea into a week of content, then publishes it to the platforms where your audience already spends time.</p>
+          <div className="hero-actions"><Link href="/signup" className="landing-primary">Start for free <ArrowUpRight size={17} /></Link><a href="#how-it-works" className="landing-text-link">See how it works <span>↓</span></a></div>
+          <div className="hero-note"><span className="hero-note-line" /><span>No complicated setup. No content calendar to babysit.</span></div>
+        </div>
+        <div className="hero-product"><PublishingPreview /><div className="hero-product-label">A calm way to keep showing up.</div></div>
       </section>
 
-      <section className="signal-strip"><span className="mono">DESIGNED FOR OUTPUT</span><div className="signal-track"><span>01 / THINK</span><i /><span>02 / MAKE</span><i /><span>03 / SHIP</span><i /><span>04 / REPEAT</span></div><span className="mono">VID-GEN / 2025</span></section>
+      <section className="trust-strip"><span>Made for people who publish</span><div><span>Creators</span><i /> <span>Small teams</span><i /> <span>Growing brands</span></div><span>Save your best hours</span></section>
 
-      <section id="dashboard" className="dashboard-section section-pad"><div className="dashboard-intro"><span className="section-number mono">00 — YOUR CONTROL ROOM</span><div><h2>From prompt<br /><span>to post.</span></h2><p>See the whole run before it ships. VID-GEN keeps your idea, outputs, and publishing status in one focused workspace.</p></div></div><div className="dashboard-window"><aside className="dash-sidebar"><div className="dash-mini-brand"><img src={logo} alt="" /><span className="mono">VID-GEN</span></div><div className="dash-nav-label mono">WORKSPACE</div><div className="dash-nav-item active"><Sparkles size={15} /> Overview</div><div className="dash-nav-item"><Wand2 size={15} /> Prompt runs</div><div className="dash-nav-item"><Check size={15} /> Publishing</div><div className="dash-nav-label mono second">CHANNELS</div><div className="dash-channel"><span className="channel-mark youtube">▶</span> YouTube <span className="channel-state" /></div><div className="dash-channel"><span className="channel-mark instagram">◎</span> Instagram <span className="channel-state" /></div><div className="dash-channel"><span className="channel-mark tiktok">t</span> TikTok <span className="channel-state" /></div><div className="dash-sidebar-footer mono">PLAN / CREATOR<br /><span>ACTIVE</span></div></aside><div className="dash-main"><div className="dash-topbar"><div><span className="mono">TUESDAY / 09:41</span><h3>Good morning, Alex.</h3></div><button className="dash-create"><Wand2 size={14} /> New prompt</button></div><div className="dash-grid"><div className="dash-prompt-card"><div className="dash-card-head"><span className="mono">CURRENT BRIEF</span><span className="dash-ready"><span className="live-dot" /> RUNNING</span></div><p>“Create a practical 30-second video about building a consistent creative habit.”</p><div className="dash-progress"><span /><span /><span /><span /><span /></div><div className="dash-progress-meta mono"><span>PREPARING 5 ASSETS</span><span>68%</span></div></div><div className="dash-summary-card"><span className="mono">THIS WEEK</span><strong>18</strong><p>posts shipped</p><div className="summary-bars"><i /><i /><i /><i /><i /><i /><i /></div></div><div className="dash-output-card"><div className="dash-card-head"><span className="mono">CONTENT / 05</span><span className="mono">VIEW ALL ↗</span></div><div className="output-list"><div className="output-item"><span className="output-thumb thumb-video"><Play size={13} fill="currentColor" /></span><div><strong>Short video</strong><small>Vertical / 00:30</small></div><span className="output-status">READY</span></div><div className="output-item"><span className="output-thumb thumb-caption">Aa</span><div><strong>Caption set</strong><small>3 variations</small></div><span className="output-status">READY</span></div><div className="output-item"><span className="output-thumb thumb-cover"><Sparkles size={13} /></span><div><strong>Cover frame</strong><small>9:16 / 1080p</small></div><span className="output-status">QUEUED</span></div></div></div><div className="dash-publish-card"><div className="dash-card-head"><span className="mono">PUBLISH QUEUE</span><span className="mono">NEXT 09:30</span></div><div className="publish-row"><span className="channel-mark youtube">▶</span><div><strong>Creator habit / short</strong><small>Today · YouTube Shorts</small></div><span className="publish-pill">SYNCED</span></div><div className="publish-row"><span className="channel-mark instagram">◎</span><div><strong>Creator habit / reel</strong><small>Today · Instagram</small></div><span className="publish-pill muted">SCHEDULED</span></div></div></div></div></div></section>
+      <section id="how-it-works" className="landing-section process-section"><div className="section-heading"><span className="landing-eyebrow">HOW IT WORKS</span><h2>From a thought<br /><em>to a full week.</em></h2><p>Give VID-GEN the direction. Keep the final say. Everything else moves forward in one simple workflow.</p></div><div className="process-grid"><article><span className="process-number">01</span><div className="process-icon"><PenLine size={19} /></div><h3>Share the starting point</h3><p>Drop in an idea, a voice note, a link, or a rough brief. It does not need to be polished.</p></article><article><span className="process-number">02</span><div className="process-icon"><CalendarDays size={19} /></div><h3>Build the week</h3><p>VID-GEN shapes the idea into posts, short videos, captions, and a schedule that makes sense.</p></article><article><span className="process-number">03</span><div className="process-icon"><Send size={19} /></div><h3>Let it go live</h3><p>Review what matters, connect your channels once, and let the system publish on time.</p></article></div></section>
 
-      <section id="workflow" className="workflow-section section-pad"><div className="section-intro"><span className="section-number mono">01 — THE WORKFLOW</span><h2>Make less noise.<br /><span>Make more moves.</span></h2><p>Keep the idea. Lose the busywork. VID-GEN gives every thought a clear path from rough prompt to ready-to-post content.</p></div><div className="workflow-grid"><div className="workflow-image"><img src={workflowImage} alt="Content outputs branching from a prompt card" /><div className="floating-note mono">3 OUTPUTS / 1 PROMPT</div></div><div className="steps"><div className="step active"><span className="step-index">01</span><div><h3>Drop in the idea</h3><p>Give us the thought, the angle, or just the feeling. Context in, blank page out.</p></div><ChevronRight /></div><div className="step"><span className="step-index">02</span><div><h3>Shape the run</h3><p>Choose your format, tone, and destination. VID-GEN builds a complete content set.</p></div><ChevronRight /></div><div className="step"><span className="step-index">03</span><div><h3>Let it ship</h3><p>Review once, then schedule or publish across your connected platforms.</p></div><ChevronRight /></div></div></div></section>
+      <section id="channels" className="channels-section landing-section"><div className="channel-copy"><span className="landing-eyebrow">ONE WORKFLOW, EVERYWHERE</span><h2>Show up<br /><em>where it counts.</em></h2><p>Your voice stays consistent while each post gets the format, timing, and finish the platform expects.</p><Link href="/signup" className="landing-outline">Connect your channels <ArrowUpRight size={16} /></Link></div><div className="channel-board"><div className="channel-board-top"><span>Connected channels</span><span className="connection-state"><span /> All systems ready</span></div><div className="channel-row"><div className="channel-icon instagram"><Instagram size={20} /></div><div><strong>Instagram</strong><span>@yourbrand</span></div><b>Connected</b><Check size={16} /></div><div className="channel-row"><div className="channel-icon youtube"><Youtube size={20} /></div><div><strong>YouTube</strong><span>Your channel</span></div><b>Connected</b><Check size={16} /></div><div className="channel-row"><div className="channel-icon tiktok"><Music2 size={19} /></div><div><strong>TikTok</strong><span>@yourbrand</span></div><b>Connected</b><Check size={16} /></div><div className="channel-board-bottom"><span>Next scheduled post</span><strong>Today · 9:30 AM</strong></div></div></section>
 
-      <section id="formats" className="formats-section section-pad"><div className="section-intro compact"><span className="section-number mono">02 — ONE INPUT, MANY OUTPUTS</span><h2>Your content,<br /><span>in its native format.</span></h2></div><div className="format-cards"><div className="format-card blue-card"><span className="card-top mono">01 / SHORT-FORM</span><div className="format-shape vertical"><Play size={24} fill="currentColor" /></div><h3>Short video</h3><p>Hooks, scripts, cuts, and captions tuned for attention.</p><span className="format-status mono"><span className="live-dot" /> READY FOR REELS</span><span className="card-arrow"><ArrowUpRight /></span></div><div className="format-card white-card"><span className="card-top mono">02 / SOCIAL</span><div className="format-shape square"><Sparkles size={23} /></div><h3>Social kits</h3><p>Every post, carousel, and thumbnail you need to stay present.</p><span className="format-status mono"><span className="live-dot" /> ASSET KIT / 06</span><span className="card-arrow"><ArrowUpRight /></span></div><div className="format-card dark-card"><span className="card-top mono">03 / CAMPAIGN</span><div className="format-shape wide"><Check size={23} /></div><h3>Campaign runs</h3><p>One idea expanded into a week of consistent publishing.</p><span className="format-status mono"><span className="live-dot" /> RUN READY</span><span className="card-arrow"><ArrowUpRight /></span></div></div></section>
+      <section id="automation" className="automation-section-new landing-section"><div className="automation-card"><div className="automation-card-copy"><span className="landing-eyebrow">THE RESULT</span><h2>More consistency.<br /><em>Less screen time.</em></h2><p>When your publishing is handled, you get to spend your day on the work, conversations, and ideas that actually move the business forward.</p><Link href="/signup" className="landing-primary">Create your first run <ArrowUpRight size={17} /></Link></div><div className="result-stats"><div><strong>7</strong><span>days planned</span></div><div><strong>12</strong><span>posts ready</span></div><div><strong>3</strong><span>channels synced</span></div></div></div></section>
 
-      <section id="automation" className="automation-section section-pad"><div className="automation-copy"><span className="section-number mono">03 — THE QUIET ADVANTAGE</span><h2>Publish once.<br /><span>Show up everywhere.</span></h2><p>Connect your channels, set your rhythm, and let VID-GEN handle the handoff. Your content gets out while you get back to the work only you can do.</p><Link href="/signup" className="outline-btn">Build your first run <ArrowUpRight size={16} /></Link></div><div className="automation-board"><div className="board-top mono"><span>AUTOMATION BOARD</span><span>SYNCED <span className="live-dot" /></span></div><div className="board-card"><div className="board-card-icon">V</div><div><strong>Creator tip / 30 sec</strong><span className="mono">READY TO PUBLISH</span></div><span className="board-check"><Check size={14} /></span></div><div className="board-line"><span className="line-dot" /><span /><span className="line-dot" /><span /><span className="line-dot" /></div><div className="platform-row"><div><b>▶</b><span>YouTube</span><small>Published</small></div><div><b>◎</b><span>Instagram</span><small>Scheduled</small></div><div><b>t</b><span>TikTok</span><small>Queued</small></div></div><div className="board-footer mono">NEXT RUN / THU 09:30 AM <span>↗</span></div></div></section>
-
-      <section className="final-cta"><div><span className="mono">THE STUDIO IS OPEN</span><h2>Turn the idea<br /><em>into a run.</em></h2></div><Link href="/signup" className="primary-btn">Create your free account <ArrowUpRight size={17} /></Link></section>
+      <section className="landing-cta"><span className="landing-eyebrow">A BETTER CONTENT RHYTHM</span><h2>Make the idea.<br /><em>We’ll handle the rest.</em></h2><p>Start with one idea today and wake up to a week of content tomorrow.</p><Link href="/signup" className="landing-primary">Get started free <ArrowUpRight size={17} /></Link></section>
     </main>
-    <footer><Brand /><span className="footer-copy">Prompt in. Presence out.</span><span className="mono">© 2025 VID-GEN</span></footer>
+    <footer className="landing-footer"><Brand /><span>Content, on schedule.</span><span>© 2026 VID-GEN</span></footer>
   </div>;
 }
