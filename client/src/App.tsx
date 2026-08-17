@@ -6,6 +6,8 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
+import EmailConfirmation from "./pages/EmailConfirmation";
+import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import Schedule from "./pages/Schedule";
 import NotFound from "./pages/NotFound";
@@ -16,6 +18,8 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/login" component={() => <Auth mode="login" />} />
       <Route path="/signup" component={() => <Auth mode="signup" />} />
+      <Route path="/confirm-email" component={EmailConfirmation} />
+      <Route path="/forgot-password" component={ForgotPassword} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/schedule" component={Schedule} />
       <Route path="/404" component={NotFound} />
