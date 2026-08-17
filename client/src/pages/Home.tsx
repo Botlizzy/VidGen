@@ -1,10 +1,32 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, CalendarDays, Check, Clock3, Instagram, Menu, Music2, PenLine, Send, X, Youtube } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
 const logo = "/manus-storage/vid-gen-mark_b4fd1632.png";
 const heroVideo = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663897199193/lRhvhBRvMbsmvoJz.mp4";
 const heroPoster = "/manus-storage/vid-gen-hero_75b5016b.jpg";
+
+function useScrollReveal<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setVisible(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.18, rootMargin: "0px 0px -7% 0px" });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+  return { ref, className: visible ? "scroll-reveal is-visible" : "scroll-reveal" };
+}
 
 function Brand() {
   return <Link href="/" className="landing-brand" aria-label="VID-GEN home"><img src={logo} alt="" /><span className="brand-name"><span className="brand-vid">VID</span><span className="brand-cut">·</span><span className="brand-gen">GEN</span></span></Link>;
@@ -40,6 +62,8 @@ function PublishingPreview() {
 }
 
 export default function Home() {
+  const workflowReveal = useScrollReveal<HTMLElement>();
+  const channelsReveal = useScrollReveal<HTMLElement>();
   return <div className="landing-shell">
     <Header />
     <main>
@@ -62,9 +86,9 @@ export default function Home() {
 
       <section className="trust-strip"><span>Made for people who publish</span><div><span>Creators</span><i /> <span>Small teams</span><i /> <span>Growing brands</span></div><span>Save your best hours</span></section>
 
-      <section id="how-it-works" className="landing-section process-section"><div className="section-heading"><span className="landing-eyebrow">HOW IT WORKS</span><h2>From a thought<br /><em>to a full week.</em></h2><p>Give VID-GEN the direction. Keep the final say. Everything else moves forward in one simple workflow.</p></div><div className="process-grid"><article><span className="process-number">01</span><div className="process-icon"><PenLine size={19} /></div><h3>Share the starting point</h3><p>Drop in an idea, a voice note, a link, or a rough brief. It does not need to be polished.</p></article><article><span className="process-number">02</span><div className="process-icon"><CalendarDays size={19} /></div><h3>Build the week</h3><p>VID-GEN shapes the idea into posts, short videos, captions, and a schedule that makes sense.</p></article><article><span className="process-number">03</span><div className="process-icon"><Send size={19} /></div><h3>Let it go live</h3><p>Review what matters, connect your channels once, and let the system publish on time.</p></article></div></section>
+      <section id="how-it-works" ref={workflowReveal.ref} className={`landing-section process-section ${workflowReveal.className}`}><div className="section-heading"><span className="landing-eyebrow">HOW IT WORKS</span><h2>From a thought<br /><em>to a full week.</em></h2><p>Give VID-GEN the direction. Keep the final say. Everything else moves forward in one simple workflow.</p></div><div className="process-grid"><article><span className="process-number">01</span><div className="process-icon"><PenLine size={19} /></div><h3>Share the starting point</h3><p>Drop in an idea, a voice note, a link, or a rough brief. It does not need to be polished.</p></article><article><span className="process-number">02</span><div className="process-icon"><CalendarDays size={19} /></div><h3>Build the week</h3><p>VID-GEN shapes the idea into posts, short videos, captions, and a schedule that makes sense.</p></article><article><span className="process-number">03</span><div className="process-icon"><Send size={19} /></div><h3>Let it go live</h3><p>Review what matters, connect your channels once, and let the system publish on time.</p></article></div></section>
 
-      <section id="channels" className="channels-section landing-section"><div className="channel-copy"><span className="landing-eyebrow">ONE WORKFLOW, EVERYWHERE</span><h2>Show up<br /><em>where it counts.</em></h2><p>Your voice stays consistent while each post gets the format, timing, and finish the platform expects.</p><Link href="/signup" className="landing-outline">Connect your channels <ArrowUpRight size={16} /></Link></div><div className="channel-board"><div className="channel-board-top"><span>Connected channels</span><span className="connection-state"><span /> All systems ready</span></div><div className="channel-row"><div className="channel-icon instagram"><Instagram size={20} /></div><div><strong>Instagram</strong><span>@yourbrand</span></div><b>Connected</b><Check size={16} /></div><div className="channel-row"><div className="channel-icon youtube"><Youtube size={20} /></div><div><strong>YouTube</strong><span>Your channel</span></div><b>Connected</b><Check size={16} /></div><div className="channel-row"><div className="channel-icon tiktok"><Music2 size={19} /></div><div><strong>TikTok</strong><span>@yourbrand</span></div><b>Connected</b><Check size={16} /></div><div className="channel-board-bottom"><span>Next scheduled post</span><strong>Today · 9:30 AM</strong></div></div></section>
+      <section id="channels" ref={channelsReveal.ref} className={`channels-section landing-section ${channelsReveal.className}`}><div className="channel-copy"><span className="landing-eyebrow">ONE WORKFLOW, EVERYWHERE</span><h2>Show up<br /><em>where it counts.</em></h2><p>Your voice stays consistent while each post gets the format, timing, and finish the platform expects.</p><Link href="/signup" className="landing-outline">Connect your channels <ArrowUpRight size={16} /></Link></div><div className="channel-board"><div className="channel-board-top"><span>Connected channels</span><span className="connection-state"><span /> All systems ready</span></div><div className="channel-row"><div className="channel-icon instagram"><Instagram size={20} /></div><div><strong>Instagram</strong><span>@yourbrand</span></div><b>Connected</b><Check size={16} /></div><div className="channel-row"><div className="channel-icon youtube"><Youtube size={20} /></div><div><strong>YouTube</strong><span>Your channel</span></div><b>Connected</b><Check size={16} /></div><div className="channel-row"><div className="channel-icon tiktok"><Music2 size={19} /></div><div><strong>TikTok</strong><span>@yourbrand</span></div><b>Connected</b><Check size={16} /></div><div className="channel-board-bottom"><span>Next scheduled post</span><strong>Today · 9:30 AM</strong></div></div></section>
 
       <section id="automation" className="automation-section-new landing-section"><div className="automation-card"><div className="automation-card-copy"><span className="landing-eyebrow">THE RESULT</span><h2>More consistency.<br /><em>Less screen time.</em></h2><p>When your publishing is handled, you get to spend your day on the work, conversations, and ideas that actually move the business forward.</p><Link href="/signup" className="landing-primary">Create your first run <ArrowUpRight size={17} /></Link></div><div className="result-stats"><div><strong>7</strong><span>days planned</span></div><div><strong>12</strong><span>posts ready</span></div><div><strong>3</strong><span>channels synced</span></div></div></div></section>
 
