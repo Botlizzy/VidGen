@@ -1,105 +1,30 @@
-import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, CalendarDays, Check, Clock3, Instagram, Menu, Music2, PenLine, Send, X, Youtube } from "lucide-react";
-import { Link, useLocation } from "wouter";
+/* VID-GEN landing: deep dark canvas, vivid four-color brand accents, human creator-first messaging, and motion-safe reveals. */
+import { ArrowRight, Check, Facebook, Instagram, Play, Sparkles, Twitter, Youtube, Zap } from "lucide-react";
+import { Link } from "wouter";
 
-const logo = "/manus-storage/vid-gen-mark_b4fd1632.png";
-const heroVideo = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663897199193/lRhvhBRvMbsmvoJz.mp4";
-const heroPoster = "/manus-storage/vid-gen-hero_75b5016b.jpg";
-const keyboardImage = "/manus-storage/vid-gen-keyboard_dca3ba9f.jpg";
-const officeImage = "/manus-storage/vid-gen-office_cd89fad4.jpg";
-const mobileStudioImage = "/manus-storage/vid-gen-mobile-studio_2a17d1e7.jpg";
-const uploadedReferenceImage = "/manus-storage/vid-gen-reference_60e29fa4.jpg";
-
-function useScrollReveal<T extends HTMLElement>() {
-  const ref = useRef<T>(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setVisible(true);
-      return;
-    }
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setVisible(true);
-        observer.disconnect();
-      }
-    }, { threshold: 0.18, rootMargin: "0px 0px -7% 0px" });
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-  return { ref, className: visible ? "scroll-reveal is-visible" : "scroll-reveal" };
-}
-
-function Brand() {
-  return <Link href="/" className="landing-brand" aria-label="VID-GEN home"><img src={logo} alt="" /><span className="brand-name"><span className="brand-vid">VID</span><span className="brand-cut">·</span><span className="brand-gen">GEN</span></span></Link>;
-}
-
-function Header() {
-  const [open, setOpen] = useState(false);
-  const [, navigate] = useLocation();
-  const close = () => setOpen(false);
-  return <header className="landing-header">
-    <Brand />
-    <nav className={open ? "landing-nav is-open" : "landing-nav"} aria-label="Main navigation">
-      <a href="#how-it-works" onClick={close}>How it works</a>
-      <a href="#channels" onClick={close}>Channels</a>
-      <a href="#automation" onClick={close}>Automation</a>
-      <Link href="/login" onClick={close}>Sign in</Link>
-      <button className="landing-nav-button" onClick={() => navigate("/signup")}>Get started <ArrowUpRight size={15} /></button>
-    </nav>
-    <button className="landing-menu" aria-label={open ? "Close menu" : "Open menu"} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>
-  </header>;
-}
-
-function PublishingPreview() {
-  return <div className="publishing-preview" aria-label="Example content publishing schedule">
-    <div className="preview-head"><div><span className="preview-kicker">This week</span><strong>Publishing queue</strong></div><span className="preview-status"><span /> On track</span></div>
-    <div className="preview-progress"><span /><span /><span /><span /><span /><span /><span /></div>
-    <div className="preview-date"><span>MON 12</span><span>TUE 13</span><span>WED 14</span><span>THU 15</span><span>FRI 16</span></div>
-    <div className="scheduled-post featured"><div className="post-thumb post-thumb-coral">01</div><div className="post-copy"><strong>3 habits that changed my mornings</strong><span><Clock3 size={12} /> Today at 9:30 AM</span></div><span className="post-channel"><Instagram size={15} /></span></div>
-    <div className="scheduled-post"><div className="post-thumb post-thumb-sage">02</div><div className="post-copy"><strong>Behind the scenes: a better workflow</strong><span><CalendarDays size={12} /> Tomorrow at 12:00 PM</span></div><span className="post-channel"><Youtube size={15} /></span></div>
-    <div className="scheduled-post"><div className="post-thumb post-thumb-blue">03</div><div className="post-copy"><strong>One small idea worth saving</strong><span><CalendarDays size={12} /> Friday at 8:00 AM</span></div><span className="post-channel"><Music2 size={15} /></span></div>
-    <div className="preview-footer"><span><Check size={14} /> 12 posts ready</span><span>View schedule <ArrowUpRight size={13} /></span></div>
-  </div>;
-}
+const features = [
+  ["01", "Video Scripts", "Turn a rough thought into a clear script with a beginning, middle, and reason to keep watching.", "red"],
+  ["02", "Captions", "Write captions that sound like you, ready for every channel and every moment.", "blue"],
+  ["03", "Hashtags", "Find the language your audience already uses without losing your point of view.", "green"],
+  ["04", "Auto-Post", "Move from finished idea to scheduled publishing without opening five tabs.", "yellow"],
+] as const;
+const platforms = [[Youtube, "YouTube"], [Instagram, "Instagram"], [Twitter, "Twitter / X"], [Facebook, "Facebook"]] as const;
 
 export default function Home() {
-  const workflowReveal = useScrollReveal<HTMLElement>();
-  const channelsReveal = useScrollReveal<HTMLElement>();
-  return <div className="landing-shell">
-    <Header />
+  return <div className="marketing-page">
+    <div className="ambient-orb orb-red" /><div className="ambient-orb orb-blue" /><div className="ambient-grid" />
+    <header className="marketing-nav"><Link href="/" className="marketing-brand"><span className="brand-mark"><Sparkles size={15} /></span><span>VID<span className="brand-red">·</span>GEN</span></Link><nav><a href="#features">Features</a><a href="#platforms">Platforms</a><a href="#pricing">Pricing</a></nav><div className="nav-ctas"><Link href="/login" className="nav-login">Log in</Link><Link href="/signup" className="button button-green button-small">Get started <ArrowRight size={15} /></Link></div></header>
     <main>
-      <section className="landing-hero">
-        <div className="hero-video-layer" aria-hidden="true">
-          <video className="hero-background-video" autoPlay muted loop playsInline poster={heroPoster}>
-            <source src={heroVideo} type="video/mp4" />
-          </video>
-          <div className="hero-video-shade" />
-        </div>
-        <div className="hero-message">
-          <div className="landing-eyebrow"><span /> CONTENT, ON SCHEDULE</div>
-          <h1>Your content should<br /><em>run without you.</em></h1>
-          <p>VID-GEN turns one good idea into a week of content, then publishes it to the platforms where your audience already spends time.</p>
-          <div className="hero-actions"><Link href="/signup" className="landing-primary">Start for free <ArrowUpRight size={17} /></Link><a href="#how-it-works" className="landing-text-link">See how it works <span>↓</span></a></div>
-          <div className="hero-note"><span className="hero-note-line" /><span>No complicated setup. No content calendar to babysit.</span></div>
-        </div>
-        <div className="hero-product"><div className="hero-image-card"><img className="hero-keyboard-image" src={keyboardImage} alt="Keyboard and creator desk" /><div className="reference-device"><img src={uploadedReferenceImage} alt="VID-GEN mobile studio reference" /><span>LIVE PREVIEW</span></div><div className="hero-image-overlay"><span className="live-dot" /> STUDIO ONLINE <strong>04 / 04</strong></div></div><PublishingPreview /><div className="hero-product-label">A calm way to keep showing up.</div></div>
-      </section>
-
-      <section className="trust-strip"><span>Made for people who publish</span><div><span>Creators</span><i /> <span>Small teams</span><i /> <span>Growing brands</span></div><span>Save your best hours</span></section>
-
-      <section id="how-it-works" ref={workflowReveal.ref} className={`landing-section process-section ${workflowReveal.className}`}><div className="section-heading"><span className="landing-eyebrow">HOW IT WORKS</span><h2>From a thought<br /><em>to a full week.</em></h2><p>Give VID-GEN the direction. Keep the final say. Everything else moves forward in one simple workflow.</p></div><div className="process-grid"><article><span className="process-number">01</span><div className="process-icon"><PenLine size={19} /></div><h3>Share the starting point</h3><p>Drop in an idea, a voice note, a link, or a rough brief. It does not need to be polished.</p></article><article><span className="process-number">02</span><div className="process-icon"><CalendarDays size={19} /></div><h3>Build the week</h3><p>VID-GEN shapes the idea into posts, short videos, captions, and a schedule that makes sense.</p></article><article><span className="process-number">03</span><div className="process-icon"><Send size={19} /></div><h3>Let it go live</h3><p>Review what matters, connect your channels once, and let the system publish on time.</p></article></div></section>
-
-      <section id="channels" ref={channelsReveal.ref} className={`channels-section landing-section ${channelsReveal.className}`}><div className="channel-copy"><span className="landing-eyebrow">ONE WORKFLOW, EVERYWHERE</span><h2>Show up<br /><em>where it counts.</em></h2><p>Your voice stays consistent while each post gets the format, timing, and finish the platform expects.</p><Link href="/signup" className="landing-outline">Connect your channels <ArrowUpRight size={16} /></Link></div><div className="channel-board"><div className="channel-board-top"><span>Connected channels</span><span className="connection-state"><span /> All systems ready</span></div><div className="channel-row"><div className="channel-icon instagram"><Instagram size={20} /></div><div><strong>Instagram</strong><span>@yourbrand</span></div><b>Connected</b><Check size={16} /></div><div className="channel-row"><div className="channel-icon youtube"><Youtube size={20} /></div><div><strong>YouTube</strong><span>Your channel</span></div><b>Connected</b><Check size={16} /></div><div className="channel-row"><div className="channel-icon tiktok"><Music2 size={19} /></div><div><strong>TikTok</strong><span>@yourbrand</span></div><b>Connected</b><Check size={16} /></div><div className="channel-board-bottom"><span>Next scheduled post</span><strong>Today · 9:30 AM</strong></div></div></section>
-
-      <section className="studio-scene" aria-label="VID-GEN creator studio preview"><div className="studio-scene-image"><img src={officeImage} alt="Professional creator studio workspace" /><div className="studio-scanline" /><div className="studio-corner-label"><span>ROOM 02 / PUBLISHING</span><strong>Build once.<br /><em>Show up everywhere.</em></strong></div></div><div className="studio-scene-side"><div className="studio-side-top"><span className="landing-eyebrow">YOUR CREATOR DESK</span><span className="studio-counter">02 / 03</span></div><h2>A better place<br /><em>for good ideas.</em></h2><p>One focused workspace for the messy first thought, the polished final cut, and every channel in between.</p><div className="studio-metric-grid"><div><strong>24</strong><span>assets in motion</span></div><div><strong>08</strong><span>posts this week</span></div><div><strong>03</strong><span>channels linked</span></div></div><Link href="/signup" className="landing-primary">Open the studio <ArrowUpRight size={17} /></Link></div></section>
-
-      <section id="automation" className="automation-section-new landing-section"><div className="automation-card"><div className="automation-card-copy"><span className="landing-eyebrow">THE RESULT</span><h2>More consistency.<br /><em>Less screen time.</em></h2><p>When your publishing is handled, you get to spend your day on the work, conversations, and ideas that actually move the business forward.</p><Link href="/signup" className="landing-primary">Create your first run <ArrowUpRight size={17} /></Link></div><div className="result-stats"><div><strong>7</strong><span>days planned</span></div><div><strong>12</strong><span>posts ready</span></div><div><strong>3</strong><span>channels synced</span></div></div></div></section>
-
-      <section className="landing-cta"><span className="landing-eyebrow">A BETTER CONTENT RHYTHM</span><h2>Make the idea.<br /><em>We’ll handle the rest.</em></h2><p>Start with one idea today and wake up to a week of content tomorrow.</p><Link href="/signup" className="landing-primary">Get started free <ArrowUpRight size={17} /></Link></section>
+      <section className="marketing-hero"><div className="hero-copy"><div className="eyebrow"><span className="eyebrow-line" /> YOUR NEXT POST STARTS HERE</div><h1>Create.<br /><span className="hero-word red-text">Generate.</span><br /><span className="hero-word blue-text">Dominate.</span></h1><p>AI-powered content for every platform — posted automatically. Give VID-GEN the direction. Keep your voice.</p><div className="hero-actions"><Link href="/signup" className="button button-green">Get started free <ArrowRight size={17} /></Link><a href="#demo" className="button button-outline"><span className="play-icon"><Play size={12} fill="currentColor" /></span> Watch demo</a></div><div className="hero-proof"><span className="proof-stack"><i /><i /><i /></span><span>Made for creators who have something to say.</span></div></div><div className="hero-visual" id="demo"><div className="hero-window"><div className="window-bar"><span><i /><i /><i /></span><small>vid-gen / new brief</small><span className="window-status"><b /> LIVE</span></div><div className="prompt-card"><span className="mini-label">PROMPT / 001</span><p>"A short video about building a slower, more intentional morning routine."</p><div className="prompt-footer"><span className="tag-pill"><Zap size={12} /> Full package</span><span>Generating...</span></div></div><div className="output-list"><div className="output-row"><span className="output-icon red-bg">S</span><span><b>Video script</b><small>45 sec · ready to edit</small></span><Check size={16} className="green-icon" /></div><div className="output-row"><span className="output-icon blue-bg">C</span><span><b>Caption set</b><small>3 versions · ready to post</small></span><Check size={16} className="green-icon" /></div><div className="output-row"><span className="output-icon yellow-bg">#</span><span><b>Hashtag pack</b><small>12 tags · researched</small></span><Check size={16} className="green-icon" /></div></div><div className="publish-strip"><span><span className="pulse-dot" /> Publishing queue</span><strong>12 posts ready <ArrowRight size={14} /></strong></div></div><div className="hero-float float-one"><span className="float-icon green-bg"><Check size={13} /></span><span><b>Posted</b><small>2 min ago</small></span></div><div className="hero-float float-two"><span className="float-icon yellow-bg"><Sparkles size={13} /></span><span><b>4 outputs</b><small>from one prompt</small></span></div></div></section>
+      <section className="platform-strip" id="platforms"><span className="mini-label">READY FOR THE PLACES YOU ALREADY SHOW UP</span><div>{platforms.map(([Icon, name]) => <span key={name}><Icon size={17} />{name}</span>)}</div></section>
+      <section className="section-block" id="features"><div className="section-intro"><div className="eyebrow"><span className="eyebrow-line" /> THE WHOLE LOOP</div><h2>One idea in.<br /><em>Everything out.</em></h2><p>One workspace for the work behind showing up consistently. Write less from scratch. Keep more of what makes your voice yours.</p></div><div className="feature-grid">{features.map(([num, title, text, color]) => <article className={`feature-card ${color}`} key={title}><span className="feature-number">{num}</span><div className="feature-icon"><Sparkles size={18} /></div><h3>{title}</h3><p>{text}</p><ArrowRight size={18} className="feature-arrow" /></article>)}</div></section>
+      <section className="pricing-section" id="pricing"><div className="section-intro centered"><div className="eyebrow"><span className="eyebrow-line" /> SIMPLE PLANS</div><h2>Pick your pace.<br /><em>Keep your momentum.</em></h2></div><div className="pricing-grid"><Price name="Free" price="$0" text="For getting your first rhythm going." features={["10 generations / month", "2 connected platforms", "Basic scheduling"]} tone="blue" /><Price name="Pro" price="$19" text="For creators ready to publish consistently." features={["Unlimited generations", "All platform connections", "Advanced scheduling", "Voice & tone presets"]} tone="green" featured /><Price name="Creator" price="$49" text="For small teams building a bigger presence." features={["Everything in Pro", "3 team seats", "Analytics workspace", "Priority support"]} tone="red" /></div></section>
+      <section className="final-cta"><div className="eyebrow"><span className="eyebrow-line" /> START WITH ONE GOOD IDEA</div><h2>Create once.<br /><em>Show up everywhere.</em></h2><Link href="/signup" className="button button-green">Build your first package <ArrowRight size={17} /></Link></section>
     </main>
-    <footer className="landing-footer"><Brand /><span>Content, on schedule.</span><span>© 2026 VID-GEN</span></footer>
+    <footer className="marketing-footer"><Link href="/" className="marketing-brand"><span className="brand-mark"><Sparkles size={13} /></span><span>VID<span className="brand-red">·</span>GEN</span></Link><span>© 2026 VID-GEN</span><div><a href="#features">Features</a><a href="#pricing">Pricing</a><Link href="/login">Log in</Link></div></footer>
   </div>;
+}
+
+function Price({ name, price, text, features, tone, featured = false }: { name: string; price: string; text: string; features: string[]; tone: string; featured?: boolean }) {
+  return <article className={`price-card ${tone} ${featured ? "featured" : ""}`}>{featured && <span className="popular-pill">MOST POPULAR</span>}<span className="price-name">{name}</span><div className="price-value">{price}<small>/month</small></div><p>{text}</p><ul>{features.map(item => <li key={item}><Check size={14} />{item}</li>)}</ul><Link href="/signup" className={`button ${tone === "green" ? "button-green" : "button-outline"}`}>Choose {name} <ArrowRight size={15} /></Link></article>;
 }
