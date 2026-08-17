@@ -8,6 +8,7 @@ const heroPoster = "/manus-storage/vid-gen-hero_75b5016b.jpg";
 const keyboardImage = "/manus-storage/vid-gen-keyboard_dca3ba9f.jpg";
 const officeImage = "/manus-storage/vid-gen-office_cd89fad4.jpg";
 const mobileStudioImage = "/manus-storage/vid-gen-mobile-studio_2a17d1e7.jpg";
+const uploadedReferenceImage = "/manus-storage/vid-gen-reference_60e29fa4.jpg";
 
 function useScrollReveal<T extends HTMLElement>() {
   const ref = useRef<T>(null);
@@ -84,7 +85,7 @@ export default function Home() {
           <div className="hero-actions"><Link href="/signup" className="landing-primary">Start for free <ArrowUpRight size={17} /></Link><a href="#how-it-works" className="landing-text-link">See how it works <span>↓</span></a></div>
           <div className="hero-note"><span className="hero-note-line" /><span>No complicated setup. No content calendar to babysit.</span></div>
         </div>
-        <div className="hero-product"><div className="hero-image-card"><img src={keyboardImage} alt="Keyboard and creator desk" /><div className="hero-image-overlay"><span className="live-dot" /> STUDIO ONLINE <strong>04 / 04</strong></div></div><PublishingPreview /><div className="hero-product-label">A calm way to keep showing up.</div></div>
+        <div className="hero-product"><div className="hero-image-card"><img className="hero-keyboard-image" src={keyboardImage} alt="Keyboard and creator desk" /><div className="reference-device"><img src={uploadedReferenceImage} alt="VID-GEN mobile studio reference" /><span>LIVE PREVIEW</span></div><div className="hero-image-overlay"><span className="live-dot" /> STUDIO ONLINE <strong>04 / 04</strong></div></div><PublishingPreview /><div className="hero-product-label">A calm way to keep showing up.</div></div>
       </section>
 
       <section className="trust-strip"><span>Made for people who publish</span><div><span>Creators</span><i /> <span>Small teams</span><i /> <span>Growing brands</span></div><span>Save your best hours</span></section>
