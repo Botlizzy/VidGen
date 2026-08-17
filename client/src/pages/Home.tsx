@@ -3,6 +3,8 @@ import { ArrowUpRight, CalendarDays, Check, Clock3, Instagram, Menu, Music2, Pen
 import { Link, useLocation } from "wouter";
 
 const logo = "/manus-storage/vid-gen-mark_b4fd1632.png";
+const heroVideo = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663897199193/lRhvhBRvMbsmvoJz.mp4";
+const heroPoster = "/manus-storage/vid-gen-hero_75b5016b.jpg";
 
 function Brand() {
   return <Link href="/" className="landing-brand" aria-label="VID-GEN home"><img src={logo} alt="" /><span>VID<span>·</span>GEN</span></Link>;
@@ -42,6 +44,12 @@ export default function Home() {
     <Header />
     <main>
       <section className="landing-hero">
+        <div className="hero-video-layer" aria-hidden="true">
+          <video className="hero-background-video" autoPlay muted loop playsInline poster={heroPoster}>
+            <source src={heroVideo} type="video/mp4" />
+          </video>
+          <div className="hero-video-shade" />
+        </div>
         <div className="hero-message">
           <div className="landing-eyebrow"><span /> CONTENT, ON SCHEDULE</div>
           <h1>Your content should<br /><em>run without you.</em></h1>
